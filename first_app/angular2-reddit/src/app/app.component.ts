@@ -20,6 +20,14 @@ export class AppComponent {
 
   addAticle(title:HTMLInputElement,link:HTMLInputElement):boolean{
 
-    logger.info(title);
+   // console.log(`输入的参数：title： ${title.value}，link：${link.value}`);
+    this.articles.push(new Article(title.value,link.value,0));
+    title.value='';
+    link.value='';
+    return false;
+  }
+
+  sortedArticles():Article[] {
+      return this.articles.sort((a:Article,b:Article) => b.votes - a.votes);
   }
 }
