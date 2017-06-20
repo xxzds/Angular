@@ -17,41 +17,36 @@ export  class SimpleHTTPComponent {
    loading : boolean;
 
 
+   /*constructor(private http:Http){
+
+   }*/
+
+    constructor(private jsonp:Jsonp) {
+    }
+
+   makeRequest():void {
+     this.loading = true;
+     //http://localhost:9999/tookApp/tbk/getItem
+     //http://jsonplaceholder.typicode.com/posts/1
+    /* this.http.request( 'http://localhost:9999/tookApp/tbk/getItem?callback=JSONP_CALLBACK' )
+       .subscribe( (res: Response) => {
+         this.data = res.json();
+         this.loading = false;
+       }, (error) => {
+         console.log( error );
+       } );*/
 
 
-
-
-
-   constructor(private http:Http){
-
-   }
-
-   makeRequest():void{
-        this.loading=true;
-        //http://localhost:9999/tookApp/tbk/getItem
-        //http://jsonplaceholder.typicode.com/posts/1
-        this.http.request('http://localhost:9999/tookApp/tbk/getItem?callback=JSONP_CALLBACK')
-          .subscribe((res:Response) => {
-                this.data=res.json();
-                this.loading=false;
-          },(error) =>{
-               console.log(error);
-     });
-
-
-     /* constructor(private jsonp:Jsonp) {
-      }*/
-
-
-     /*this.jsonp.get('http://localhost:9999/tookApp/tbk/getItem?callback=JSONP_CALLBACK')
-       .subscribe((res) => {
+     var params = new URLSearchParams();
+     params.set("callback", "JSONP_CALLBACK");
+     this.jsonp.post( 'http://localhost:8080/tookApp/tbk/getItem?callback=JSONP_CALLBACK',{ search: params })
+       .subscribe( (res) => {
          console.log( res.json() );
-         this.data=res.json();
-         this.loading=false;
-       },(error) => {
-          console.log(error);
-       });*/
-
-
+         this.data = res.json();
+         this.loading = false;
+       }, (error) => {
+         console.log( error );
+         this.loading = false;
+       } );
    }
 }
