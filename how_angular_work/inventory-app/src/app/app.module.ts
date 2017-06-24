@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {Component, Input, NgModule} from '@angular/core';
+import {Component, EventEmitter, Input, NgModule, Output} from '@angular/core';
 
 /**
  * 模型
@@ -19,8 +19,9 @@ export  class Product {
 @Component({
   selector:'product-image',
   inputs:['product'],
+  host: {class: 'ui small image'},
    template:`
-     <img class="product-image" [src]="product.imageUrl"/>
+     <img class="product-image" [src]="product.imageUrl">
    `
 })
 export class ProductImage{
@@ -35,10 +36,10 @@ export class ProductImage{
     selector:'product-department',
     inputs:['product'],
     template:`
-      <div>
-        <span *ngFor="let name of product.department; let i=index" >
-          <a herf="#">{{name}}</a>
-          <span>{{i < (product.department.length-1) ? '>' :''}}</span>
+      <div class="product-department">
+        <span *ngFor="let name of product.department; let i=index">
+          <a href="#">{{ name }}</a>
+          <span>{{i < (product.department.length-1) ? '>' : ''}}</span>
         </span>
       </div>
     `
@@ -69,17 +70,17 @@ export  class PriceDisplay{
   inputs:['product'],
   host: {'class': 'item'},
   template:`
-    <div >
-      <product-image [product]="product"></product-image>
-      <div style="clean:both; width: 80%">
-        <div class="header">{{product.name}}</div>
-        <div class="meta">SKU # {{product.sku}}</div>
-        <div class="description">
-          <product-department [product]="product"></product-department>
-        </div>
+    <product-image [product]="product"></product-image>
+    <div class="content">
+      <div class="header">{{ product.name }}</div>
+      <div class="meta">
+        <div class="product-sku">SKU #{{ product.sku }}</div>
       </div>
-      <price-display [price]="product.price"></price-display>
+      <div class="description">
+        <product-department [product]="product"></product-department>
+      </div>
     </div>
+    <price-display [price]="product.price"></price-display>
   `
 })
 export  class ProductRow{
@@ -93,16 +94,37 @@ export  class ProductRow{
 @Component({
   selector:'products-list',
   template:`
-    <div>
+    <div class="ui items">
       <product-row
         *ngFor="let myProduct of productList"
-        [product]="myProduct">
+        [product]="myProduct"
+        (click)='clicked(myProduct)'
+      [class.selected]="isSelected(myProduct)">
       </product-row>
-    </div>
   `
 })
 export class ProductsList{
   @Input() productList:Product[];
+
+  private currentProduct: Product;
+
+  @Output() onProductSelected: EventEmitter<Product>;
+
+  constructor(){
+    this.onProductSelected = new EventEmitter();
+  }
+
+  clicked(product:Product):void{
+      this.currentProduct = product;
+      this.onProductSelected.emit(product);
+  }
+
+  isSelected(product: Product): boolean {
+    if (!product || !this.currentProduct) {
+      return false;
+    }
+    return product.sku === this.currentProduct.sku;
+  }
 }
 
 
@@ -111,9 +133,13 @@ export class ProductsList{
  */
 @Component({
   selector:'inventory-app',
-  template:`    
-      <products-list [productList]="products">
-      </products-list>
+  template:`
+    <div class="inventory-app">
+        <products-list
+          [productList]="products"
+          (onProductSelected)="productWasSelected($event)">
+        </products-list>
+      </div>
   `
 })
 export class InventoryApp{
@@ -141,6 +167,10 @@ export class InventoryApp{
           29.99)
       ];
     }
+
+  productWasSelected(product:Product):void{
+    console.log('Product clicked: ', product);
+  }
 }
 
 
