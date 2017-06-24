@@ -6,7 +6,9 @@ import {RouterModule} from "@angular/router";
 import {appRoutes} from "./app.routes";
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {UserLoginService} from "./user/user-login/user-login.service";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -15,11 +17,15 @@ import {ReactiveFormsModule} from "@angular/forms";
   ],
   imports: [
     BrowserModule,
-   /* ReactiveFormsModule,*/
+    FormsModule,
+    ReactiveFormsModule,
+    HttpModule,
+    RouterModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    {provide:LocationStrategy,useClass:HashLocationStrategy}
+    {provide:LocationStrategy,useClass:HashLocationStrategy},
+    UserLoginService
   ],
   bootstrap: [AppComponent]
 })
