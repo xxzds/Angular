@@ -1,22 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {SimpleHTTPComponent} from "./components/SimpleHTTPComponent";
+import {SimpleHTTPComponent} from "./simple/SimpleHTTPComponent";
 import {HttpModule,JsonpModule} from "@angular/http";
-import {ItemComponent} from "./components/ItemComponent";
+import {ItemComponent} from "./simple/ItemComponent";
+import { AppComponent } from './app.component';
+import {
+  SearchBox, SearchResultComponent, TaobaoSearchComponent,
+  tbkServiceInjectables
+} from "./taobaoSearch/TaobaoSearchComponent";
 
 
 
 @NgModule({
   declarations: [
     SimpleHTTPComponent,
-    ItemComponent
+    ItemComponent,
+    AppComponent,
+    TaobaoSearchComponent,
+    SearchBox,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     JsonpModule
   ],
-  providers: [],
-  bootstrap: [SimpleHTTPComponent]
+  providers: [
+    tbkServiceInjectables
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
