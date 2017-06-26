@@ -13,17 +13,22 @@ export class TbkService{
     ){}
 
     search(query:String):Observable<Item[]>{
+        console.log('输入参数：'+query);
         return this.http.get(`${this.apiUrl}?searchName=${query}`)
           .map((response:Response) => {
-              return (<any>response.json()).tbk_item_get_response.results.n_tbk_item.map(item =>{
-                console.log(item);
-                return new Item({
-                  item_url:item.item_url,
-                  nick:item.nick,
-                  num_iid:item.num_iid,
-                  pict_url:item.pict_url
-                });
-              });
+              console.log(response.json());
+
+
+            var results = (<any>response.json()).tbk_item_get_response.results;
+            var total = (<any>response.json()).tbk_item_get_response.total_results;
+            console.log("total length:"+total);
+            if(total==0){
+              return new Item();
+            }
+
+            return results.n_tbk_item.map(item =>{
+              return new Item(item);
+            });
           });
     }
 }
@@ -38,7 +43,7 @@ export var tbkServiceInjectables: Array<any> = [
   selector:'search-box',
   outputs: ['loading', 'results'],
   template:`
-    <input type="text" class="form-control" placeholder="Search" autofocus>
+    <input type="text" class="form-control" placeholder="关键字" autofocus>
   `
 })
 export  class  SearchBox implements OnInit{
@@ -80,11 +85,20 @@ export  class  SearchBox implements OnInit{
 
 @Component({
   selector:'search-result',
+  inputs:['item'],
   template:`
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <img src="{{item.pict_url}}">
+        <div class="caption">
+          <h3>{{item.title}}</h3>
+        </div>
+      </div>
+    </div>
   `
 })
 export class SearchResultComponent {
-
+    item:Item;
 
 
 }
@@ -122,19 +136,20 @@ export class SearchResultComponent {
           </div>
         </div>
 
-        <!--<div class="row">-->
-          <!--<search-result-->
-            <!--*ngFor="let result of results"-->
-            <!--[result]="result">-->
-          <!--</search-result>-->
-        <!--</div>-->
+        <div class="row">
+          <search-result
+            *ngFor="let item of items"
+            [item]="item">
+          </search-result>
+        </div>
       </div>
     `
 })
 
 export class  TaobaoSearchComponent{
+  items:Item[];
 
-  updateResults(){
-
+  updateResults(items:Item[]){
+      this.items = items;
   }
 }
