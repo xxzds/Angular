@@ -23,7 +23,7 @@ export class TbkService{
             var total = (<any>response.json()).tbk_item_get_response.total_results;
             console.log("total length:"+total);
             if(total==0){
-              return new Item();
+              return [new Item()];   //返回数组
             }
 
             return results.n_tbk_item.map(item =>{
@@ -88,12 +88,14 @@ export  class  SearchBox implements OnInit{
   inputs:['item'],
   template:`
     <div class="col-sm-6 col-md-3">
+      <a href="{{item.item_url}}">
       <div class="thumbnail">
         <img src="{{item.pict_url}}">
         <div class="caption">
           <h3>{{item.title}}</h3>
         </div>
       </div>
+      </a>
     </div>
   `
 })
@@ -102,16 +104,6 @@ export class SearchResultComponent {
 
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 @Component({
@@ -150,6 +142,6 @@ export class  TaobaoSearchComponent{
   items:Item[];
 
   updateResults(items:Item[]){
-      this.items = items;
+        this.items = items;
   }
 }
