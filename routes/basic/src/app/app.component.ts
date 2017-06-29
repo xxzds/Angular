@@ -4,13 +4,13 @@ import { Component } from '@angular/core';
   selector: 'router-app',
   template:`
   <div>
-    <nav>Navigation:
+    <div>Navigation:
       <ul>
-          <li><a [routerLink]="['home']">Home</a></li>
-          <li><a [routerLink]="['about']">About</a></li>
-          <li><a [routerLink]="['contact']">Contact</a></li>
+          <li><a  [routerLink]="['home']">Home</a></li>
+          <li><a  [routerLink]="['about']">About</a></li>
+          <li><a  [routerLink]="['contact']">Contact</a></li>
       </ul>
-    </nav>
+    </div>
     
     <router-outlet></router-outlet>
   </div>  
