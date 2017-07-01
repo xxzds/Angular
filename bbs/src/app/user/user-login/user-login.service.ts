@@ -3,6 +3,7 @@ import {User} from "../model/user-model";
 import {Http,Response} from "@angular/http";
 import 'rxjs/add/operator/map';
 import {Subject} from "rxjs/Subject";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class UserLoginService{
@@ -12,6 +13,10 @@ export class UserLoginService{
   constructor(
     public http:Http
   ){}
+
+  public currentUser():Observable<User>{
+      return this.subject.asObservable();
+  }
 
   public login(user:User){
     return this.http
@@ -25,8 +30,6 @@ export class UserLoginService{
             }
             return response;
         }
-
-
       )
       .subscribe(
         data =>{
@@ -36,5 +39,10 @@ export class UserLoginService{
           console.error(error);
         }
       )
+  }
+
+  public loginOut():void{
+      localStorage.removeItem("currentUser");
+      this.subject.next(Object.assign({}));
   }
 }

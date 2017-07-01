@@ -1,4 +1,4 @@
-<div>
+<div class="user-login-container" [@fadeIn]>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">登录</h3>
@@ -31,7 +31,7 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-success">登录</button>
-            <button type="button" class="btn btn-danger">忘记密码？</button>
+            <button type="button" class="btn btn-danger" (click)="forgetPwd()">忘记密码？</button>
           </div>
         </div>
       </form>
