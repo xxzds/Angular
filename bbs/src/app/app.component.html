@@ -26,12 +26,25 @@
          </li>
        </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <!--未登录-->
+      <ul *ngIf="!currentUser?.userName" class="nav navbar-nav navbar-right">
         <li>
           <a [routerLink]="['login']">登录</a>
         </li>
         <li>
-          <a>注册</a>
+          <a routerLink="register">注册</a>
+        </li>
+      </ul>
+      <!--已登录-->
+      <ul *ngIf="currentUser?.userName" class="nav navbar-nav navbar-right">
+        <li>
+          <a routerLink="user">欢迎你：{{currentUser?.userName}}</a>
+        </li>
+        <li>
+          <a routerLink="manage">管理后台</a>
+        </li>
+        <li>
+          <a href="javascript:void(0);" (click)="doLogout()">退出</a>
         </li>
       </ul>
     </div>
