@@ -1,0 +1,6 @@
+{
+    "id": 1,
+    "userName": "admin",
+    "email": "XXXXX@qq.com",
+    "token":"fake-jwt-token"
+}
