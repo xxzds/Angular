@@ -3,14 +3,20 @@ import { PostlistComponent } from './postlist/postlist.component';
 import {RouterModule} from "@angular/router";
 import {postRoutes} from "./post.routes";
 import {PostListService} from "./postlist/postlist.service";
-import {SharedModel} from "../shared/shared.module";
+import {SharedModule} from "../shared/shared.module";
+import {PaginationModule} from "ng2-bootstrap";
+import {BooleanPipe} from "../utils/boolean-pipe";
 
 @NgModule({
   imports: [
-    SharedModel,
+    SharedModule,
+    PaginationModule.forRoot(),
     RouterModule.forChild(postRoutes)
   ],
-  declarations: [PostlistComponent],
+  declarations: [
+    PostlistComponent,
+    BooleanPipe
+  ],
   providers:[
     PostListService
   ]
