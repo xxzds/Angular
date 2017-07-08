@@ -31,7 +31,6 @@ import {ForgetPwdService} from "./user/forget-pwd/forget-pwd.service";
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule,
     ToastModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
@@ -43,4 +42,8 @@ import {ForgetPwdService} from "./user/forget-pwd/forget-pwd.service";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(){
+    console.log('AppModule consturctor');
+  }
+}

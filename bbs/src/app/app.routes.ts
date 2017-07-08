@@ -4,6 +4,19 @@ import {UserRegisterComponent} from "./user/user-register/user-register.componen
 import {ForgetPwdComponent} from "./user/forget-pwd/forget-pwd.component";
 export const appRoutes:Routes=[
   {
+    path:'',
+    redirectTo:'posts',
+    pathMatch:'full'
+  },
+  {
+    path:'posts',
+    loadChildren:'./home/home.module#HomeModule'
+  },
+  {
+    path:'post',
+    loadChildren:'./post/post.module#PostModule'
+  },
+  {
     path:'login',
     component:UserLoginComponent
   },
