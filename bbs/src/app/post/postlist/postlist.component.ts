@@ -89,7 +89,7 @@ export class PostlistComponent implements OnInit {
    * 发布文章
    */
   public gotoWrite():void{
-    
+    this.router.navigateByUrl("user/write");
   }
 
   /**

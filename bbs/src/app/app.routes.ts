@@ -27,7 +27,12 @@ export const appRoutes:Routes=[
   {
     path:'forgetpwd',
     component:ForgetPwdComponent
+  },
+  {
+    path:'user',
+    loadChildren:'./user/user.module#UserModule'
   }
+
 
 
 

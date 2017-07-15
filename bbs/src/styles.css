@@ -17,5 +17,5 @@ html {
   padding-bottom: 162px;
 }
 
-@import "~jquery-ui-dist/jquery-ui.css";
+/*@import "~jquery-ui-dist/jquery-ui.css";*/
 @import "~ng2-toastr/bundles/ng2-toastr.min.css";

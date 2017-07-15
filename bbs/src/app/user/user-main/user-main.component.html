@@ -1,0 +1,15 @@
+<div class="user-main-container" [@flyIn]="'active'">
+  <div class="col-sm-9">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="col-sm-3">
+    <app-user-info panelTitle="用户信息"></app-user-info>
+    <div class="list-group">
+      <a  class="list-group-item">写作</a>
+      <a  class="list-group-item"><span class="badge">1024</span>文章管理</a>
+      <a  class="list-group-item"><span class="badge">1024</span>评论管理</a>
+      <a  class="list-group-item">个人设置</a>
+    </div>
+  </div>
+
+</div>
